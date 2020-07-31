@@ -5,14 +5,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
-
-	static String[] outFiles = new String[]{
-			"outputs/map_1.txt",
-			"outputs/map_2.txt",
-			"outputs/map_3.txt",
-			"outputs/map_4.txt",
-			"outputs/map_5.txt"
-	};
 	private static String[] inFiles = new String[]{
 			"inputs/map_1.input",
 			"inputs/map_2.input",
@@ -20,16 +12,15 @@ public class Main {
 			"inputs/map_4.input",
 			"inputs/map_5.input"
 	};
+	private static String[] outFiles = new String[]{
+			"outputs/map_1.txt",
+			"outputs/map_2.txt",
+			"outputs/map_3.txt",
+			"outputs/map_4.txt",
+			"outputs/map_5.txt"
+	};
 
-	public static void main(String[] args) {
-		System.out.println("Hello world");
 
-		for (int i = 0; i < inFiles.length; i++) {
-			ArrayList<String> lines = readInput(inFiles[i]);
-			// Process the file with an algorithm, machine learning, artificial intelligence and Superior Intellect
-			writeFile(outFiles[i], lines);
-		}
-	}
 
 	private static void writeFile(String inFile, ArrayList<String> lines) {
 		try {
@@ -62,5 +53,15 @@ public class Main {
 			e.printStackTrace();
 		}
 		return null;
+	}
+
+	public static void main(String[] args) {
+		System.out.println("Hello world");
+
+		for (int i = 0; i < inFiles.length; i++) {
+			ArrayList<String> lines = readInput(inFiles[i]);
+			// Process the file with an algorithm, machine learning, artificial intelligence and Superior Intellect
+			writeFile(outFiles[i], lines);
+		}
 	}
 }
