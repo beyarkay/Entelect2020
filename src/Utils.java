@@ -4,13 +4,13 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class Main {
-	private static String[] inFiles = new String[]{
+public class Utils {
+	public static String[] inFiles = new String[]{
 			"inputs/grid_1.input",
 			"inputs/grid_2.input",
 			"inputs/grid_3.input"
 	};
-	private static String[] outFiles = new String[]{
+	public static String[] outFiles = new String[]{
 			"outputs/map_1.txt",
 			"outputs/map_2.txt",
 			"outputs/map_3.txt"
@@ -18,7 +18,7 @@ public class Main {
 
 
 
-	private static void writeFile(String inFile, ArrayList<String> lines) {
+	public static void writeFile(String inFile, ArrayList<String> lines) {
 		try {
 			FileWriter writer = new FileWriter(inFile);
 			for (int i = 0; i < lines.size(); i++) {
@@ -31,7 +31,7 @@ public class Main {
 	}
 
 
-	private static ArrayList<String> readInput(String fileName) {
+	public static ArrayList<String> readInput(String fileName) {
 		ArrayList<String> lines = new ArrayList<>();
 		BufferedReader br;
 		try {
@@ -51,15 +51,7 @@ public class Main {
 		return null;
 	}
 
-	public static void main(String[] args) {
-		System.out.println("Hello world");
 
-		for (int i = 0; i < inFiles.length; i++) {
-			ArrayList<String> lines = readInput(inFiles[i]);
-			// Process the file with an algorithm, machine learning, artificial intelligence and Superior Intellect
-			writeFile(outFiles[i], lines);
-		}
-	}
 
 	public static void greedy(){
 
