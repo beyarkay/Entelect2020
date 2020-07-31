@@ -37,7 +37,7 @@ public class Main {
 
 	private static ArrayList<String> readInput(String fileName) {
 		ArrayList<String> lines = new ArrayList<>();
-		BufferedReader br = null;
+		BufferedReader br;
 		try {
 			br = new BufferedReader(new FileReader(fileName));
 
