@@ -4,10 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
-	public static void main(String[] args) {
-		System.out.println("Hello world");
-	}
-
 	String[] inFiles = new String[]{
 			"inputs/map_1.input",
 			"inputs/map_2.input",
@@ -22,6 +18,10 @@ public class Main {
 			"outputs/map_4.txt",
 			"outputs/map_5.txt"
 	};
+
+	public static void main(String[] args) {
+		System.out.println("Hello world");
+	}
 
 	public static ArrayList<String> readInput(String fileName) throws IOException {
 		ArrayList<String> lines = new ArrayList<>();
