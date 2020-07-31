@@ -5,20 +5,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
-
-	static String[] inFiles = new String[]{
-			"inputs/map_1.input",
-			"inputs/map_2.input",
-			"inputs/map_3.input",
-			"inputs/map_4.input",
-			"inputs/map_5.input"
+	private static String[] inFiles = new String[]{
+			"inputs/grid_1.input",
+			"inputs/grid_2.input",
+			"inputs/grid_3.input"
 	};
 	private static String[] outFiles = new String[]{
 			"outputs/map_1.txt",
 			"outputs/map_2.txt",
-			"outputs/map_3.txt",
-			"outputs/map_4.txt",
-			"outputs/map_5.txt"
+			"outputs/map_3.txt"
 	};
 
 
@@ -27,7 +22,7 @@ public class Main {
 		try {
 			FileWriter writer = new FileWriter(inFile);
 			for (int i = 0; i < lines.size(); i++) {
-				writer.write(lines.get(i));
+				writer.write(lines.get(i) + "\n");
 			}
 			writer.close();
 		} catch (IOException e) {
