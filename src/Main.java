@@ -5,7 +5,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Main {
-	private static String[] inFiles = new String[]{
+
+	static String[] inFiles = new String[]{
 			"inputs/map_1.input",
 			"inputs/map_2.input",
 			"inputs/map_3.input",
@@ -63,5 +64,9 @@ public class Main {
 			// Process the file with an algorithm, machine learning, artificial intelligence and Superior Intellect
 			writeFile(outFiles[i], lines);
 		}
+	}
+
+	public static void greedy(){
+
 	}
 }
