@@ -30,6 +30,15 @@ public class Utils {
 		}
 	}
 
+	public static Shape[] readShapesFile() {
+		try {
+			return readShapesFile("inputs/shapes_file.json");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 	public static Shape[] readShapesFile(String fileName) throws FileNotFoundException {
 		Scanner scanner = new Scanner(new File(fileName)).useDelimiter("\\Z");
 		String jsonString = scanner.next();

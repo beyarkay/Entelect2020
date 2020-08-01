@@ -3,6 +3,7 @@ import java.util.Arrays;
 public class Grid {
 	// top left Rows-Columns
 	public int[][] grid;
+	public int[][] grid_visited;
 
 	public boolean checkAdjacentEmpty(int row, int col) {
 		boolean up, right, down, left;
@@ -39,6 +40,11 @@ public class Grid {
 	public int countAdjacentWhitespaces(int row, int col) {
 		int returnable = 0;
 
+		for (int[] r : grid_visited) {
+			for (int c : r) {
+				c = 0;
+			}
+		}
 
 
 		return returnable;
