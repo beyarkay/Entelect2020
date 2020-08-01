@@ -51,6 +51,10 @@ public class Utils {
 		return null;
 	}
 
+	public static int calculateScore(Grid grid){
+
+	}
+
 
 
 	public static void greedy(){
