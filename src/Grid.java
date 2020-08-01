@@ -51,6 +51,19 @@ public class Grid {
 		return sb.toString();
 	}
 
+	public String toASCII() {
+		StringBuilder sb = new StringBuilder();
+		for (int row = 0; row < grid.length; row++) {
+			for (int col = 0; col < grid[row].length; col++) {
+				sb.append(String.format("%-3s", grid[row][col]));
+//				sb.append(',');
+			}
+			sb.append("\n");
+
+		}
+		return sb.toString();
+	}
+
 
 
 	public int countAdjacentWhitespaces(int startRow, int startCol) {

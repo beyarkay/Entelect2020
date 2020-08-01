@@ -12,7 +12,7 @@ public class Boyd {
 			try {
 				Utils.ProblemSpecification problemSpec = Utils.readInput("inputs/shapes_file.json", Utils.inFiles[i]);
 
-				Battery[] batteries = greedy(problemSpec);
+				Battery[] batteries = slider(problemSpec);
 				Utils.writeFile(Utils.outFiles[i], batteries);
 //				break;
 
@@ -24,7 +24,7 @@ public class Boyd {
 
 	public static Battery[] greedy(Utils.ProblemSpecification ps) {
 
-		// Read in PS and
+		// Read in PS and convert it to shapes
 		Shape[] shapes = ps.shapes;
 		int totalShapes = 0;
 		for (int i = 0; i < ps.shapeCounts.length; i++) {
@@ -93,6 +93,90 @@ public class Boyd {
 				break;
 			}
 
+		}
+		return batteries.toArray(new Battery[0]);
+	}
+
+
+	public static Battery[] slider(Utils.ProblemSpecification ps) {
+
+		// Read in PS and convert it to shapes
+		Shape[] shapes = ps.shapes;
+		int totalShapes = 0;
+		for (int i = 0; i < ps.shapeCounts.length; i++) {
+			totalShapes += ps.shapeCounts[i];
+//			System.out.println("id:" + ps.shapes[i].id + " count:" + ps.shapeCounts[i]);
+		}
+//		System.out.println();
+		BShape[] bshapes = new BShape[totalShapes];
+		int counter = 0;
+		for (int i = 0; i < ps.shapeCounts.length; i++) {
+			for (int j = 0; j < ps.shapeCounts[i]; j++) {
+				bshapes[counter] = new BShape(
+						shapes[i].id,
+						shapes[i].boundingBox,
+						shapes[i].capacity,
+						shapes[i].mass,
+						shapes[i].shapeData
+				);
+				counter++;
+			}
+		}
+		Arrays.sort(bshapes);
+
+		Grid grid = new Grid(ps);
+		ArrayList<Battery> batteries = new ArrayList<>();
+		// for each shape
+		for (int i = 0; i < totalShapes; i++) {
+			boolean placed = false;
+			Shape currShape = bshapes[i];
+			if (((float) i * 100) / totalShapes % 1 == 0) {
+				System.out.println("Done " + i + "/" + totalShapes + "(" + Math.round(((float) i) / totalShapes * 1000) + ")");
+			}//			System.out.println("id:" + currShape.id);
+			//for each offset row
+			for (int r = 0; r < ps.rows; r++) {
+				// for each offset col
+				for (int c = 0; c < ps.columns; c++) {
+					// for each rotation
+//					if (grid.grid[r][c] != 0){
+//						continue;
+//					}
+					for (int rot = 0; rot < 4; rot++) {
+						// check if the current shape can fit
+						boolean collision = false;
+						for (int cellIndex = 0; cellIndex < currShape.shapeData[rot].length; cellIndex++) {
+							int currRow = currShape.shapeData[rot][cellIndex][0] + r;
+							int currCol = currShape.shapeData[rot][cellIndex][1] + c;
+							if (currRow < 0 || currRow >= ps.rows || currCol < 0 || currCol >= ps.columns || grid.grid[currRow][currCol] != 0) {
+								collision = true;
+								break;
+							}
+						}
+						if (!collision) {
+							// Add the battery
+							for (int cellIndex = 0; cellIndex < currShape.shapeData[rot].length; cellIndex++) {
+								int currRow = currShape.shapeData[rot][cellIndex][0] + r;
+								int currCol = currShape.shapeData[rot][cellIndex][1] + c;
+								grid.grid[currRow][currCol] = bshapes[i].id;
+							}
+							Battery currBattery = new Battery(bshapes[i]);
+							currBattery.rotationId = rot;
+							currBattery.offset[0] = r;
+							currBattery.offset[1] = c;
+							batteries.add(currBattery);
+							placed = true;
+							break;
+						}
+					}
+					if (placed) {
+						break;
+					}
+				}
+				if (placed) {
+//					System.out.println(grid.toASCII());
+					break;
+				}
+			}
 		}
 		return batteries.toArray(new Battery[0]);
 	}
