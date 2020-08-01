@@ -8,7 +8,7 @@ public class Luc {
 		System.out.println("Hello world");
 
 
-		Utils.ProblemSpecification ps = Utils.readInput(2);
+		Utils.ProblemSpecification ps = Utils.readInput(3);
 		assert ps != null;
 		int sumOfShapes = 0;
 		for (int i : ps.shapeCounts) {
@@ -61,7 +61,7 @@ public class Luc {
 		Battery[] b = SpringerPaper(availableBatteries, grid, bshapes);
 		System.out.println(grid);
 		System.out.println(grid.toCSV());
-		Utils.writeFile("outputs/output1.txt",b);
+		Utils.writeFile("outputs/output3.txt",b);
 		System.out.println("bye");
 
 //		for (int i = 0; i < Utils.inFiles.length; i++) {
@@ -72,6 +72,29 @@ public class Luc {
 	}
 
 	private static Battery[] SpringerPaper(ArrayList<Battery> availableBatteries, Grid grid, BShape[] bshapes) {
+		List<Battery> usedBatteries = new ArrayList<>();
+		int[] rc = {0, 0};
+		do {
+			//foreach battery available TODO: optimise this to only check battery types/rotations
+			for (int i = 0; i < availableBatteries.size(); i++) {
+				rc = getBlockPlacement(grid, availableBatteries.get(i));
+
+				if (rc != null) {
+					availableBatteries.get(i).offset = rc;
+					availableBatteries.get(i).placeInGrid(grid);
+					usedBatteries.add(availableBatteries.get(i));
+//					System.out.println(grid);
+					availableBatteries.remove(i);
+					break;
+				}
+			}
+		} while (rc != null);
+
+
+		return usedBatteries.toArray(new Battery[0]);
+	}
+
+	private static Battery[] SpringerPaperV2(ArrayList<Battery> availableBatteries, Grid grid, BShape[] bshapes) {
 		List<Battery> usedBatteries = new ArrayList<>();
 		int[] rc = {0, 0};
 		do {
@@ -102,7 +125,7 @@ public class Luc {
 				}
 			}
 		}
-		System.out.println("No valid block placements found");
+//		System.out.println("No valid block placements found");
 		return null;
 	}
 }

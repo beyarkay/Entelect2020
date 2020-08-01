@@ -70,6 +70,7 @@ public class BruteForce {
 				if (shape.count == 0)
 					continue;
 
+				// Check rotations
 				for (int rotation = startRotation; rotation < 4; rotation++) {
 					for (int r = startRow; r < problemSpec.rows - shape.boundingBox + 1; r++) {
 						for (int c = startCol; c < problemSpec.columns - shape.boundingBox + 1; c++) {
