@@ -7,6 +7,14 @@ public class Grid {
 	public int[][] grid;
 	public int[][] grid_visited;
 
+
+	public Grid(Utils.ProblemSpecification ps) {
+		this.grid = new int[ps.rows][ps.columns];
+		for (int i = 0; i < ps.blockedCells.length; i++) {
+			grid[ps.blockedCells[i][0]][ps.blockedCells[i][1]] = -1;
+		}
+	}
+
 	public boolean checkAdjacentEmpty(int row, int col) {
 		boolean up, right, down, left;
 		up = grid[row - 1][col] == 0;
@@ -71,14 +79,14 @@ public class Grid {
 
 			visited[row][col] = true;
 			System.out.println(x);
-			returnable ++;
+			returnable++;
 			if (col > 0 && grid[row][col - 1] == 0)
 				queue.add(row + "," + (col - 1)); //go left
-			if (col < l-1 && grid[row][col + 1] == 0)
+			if (col < l - 1 && grid[row][col + 1] == 0)
 				queue.add(row + "," + (col + 1)); //go right
 			if (row > 0 && grid[row - 1][col] == 0)
 				queue.add((row - 1) + "," + col); //go up
-			if (row < h-1 && grid[row + 1][col] == 0)
+			if (row < h - 1 && grid[row + 1][col] == 0)
 				queue.add((row + 1) + "," + col); //go down
 		}
 
