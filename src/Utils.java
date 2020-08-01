@@ -31,7 +31,7 @@ public class Utils {
 	}
 
 	public static Shape[] readShapesFile(String fileName) throws FileNotFoundException {
-		Scanner scanner = new Scanner(new File("filename")).useDelimiter("\\Z");
+		Scanner scanner = new Scanner(new File(fileName)).useDelimiter("\\Z");
 		String jsonString = scanner.next();
 		scanner.close();
 		JSONObject obj = new JSONObject(jsonString);
