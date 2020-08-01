@@ -133,10 +133,11 @@ public class Utils {
 
 	public static int calculateScore(Grid grid) {
 		int returnable = 0;
-
+		int filled = 0;
 		for (int row = 0; row < grid.grid.length; row++) {
 			for (int col = 0; col < grid.grid[row].length; col++) {
 				if (col != 0) {
+					filled++;
 					returnable += 10;
 				} else {
 					if (!grid.checkAdjacentEmpty(row, col)) {
@@ -144,12 +145,16 @@ public class Utils {
 					} else {
 						// Adjacent whitespaces must be followed
 						int adjWhiteSpace = grid.countAdjacentWhitespaces(row, col);
+						returnable -= adjWhiteSpace * 2;
 					}
 				}
 			}
 		}
 
-		return returnable;
+		float totalCapacity = 1;
+		float scoreModifier = totalCapacity/filled;
+
+		return (int) (returnable*scoreModifier);
 	}
 
 
