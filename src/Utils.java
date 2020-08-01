@@ -52,7 +52,10 @@ public class Utils {
 	}
 
 	public static int calculateScore(Grid grid){
+		int returnable = 0;
 
+
+		return returnable;
 	}
 
 
