@@ -32,11 +32,15 @@ public class Battery extends Shape {
 		}
 	}
 	public boolean canPlace(Grid grid){
+		return canPlace(grid, this.offset[0], this.offset[1]);
+	}
+
+	public boolean canPlace(Grid grid, int row, int column){
 		// For each cell, first check that you can add it to the grid
 		boolean canAdd = true;
 		for (int j = 0; j < this.shapeData[this.rotationId].length; j++) {
-			int currRow = this.shapeData[this.rotationId][j][0] + this.offset[0];
-			int currCol = this.shapeData[this.rotationId][j][1] + this.offset[1];
+			int currRow = this.shapeData[this.rotationId][j][0] + row;
+			int currCol = this.shapeData[this.rotationId][j][1] + column;
 			if (currRow < 0 || currRow >= grid.rows || currCol < 0 || currCol >= grid.columns || grid.grid[currRow][currCol] == -1) {
 				canAdd = false;
 				break;

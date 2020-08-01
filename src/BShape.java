@@ -9,6 +9,10 @@ public class BShape extends Shape implements Comparable {
 	@Override
 	public int compareTo(Object other) {
 		// Sort from highest density to lowest
-		return -Float.compare(this.density, ((BShape) other).density);
+		int compVal = -Float.compare(this.density, ((BShape) other).density);
+		if(compVal == 0){
+			compVal = -Integer.compare(this.mass, ((BShape) other).mass);
+		}
+		return compVal;
 	}
 }
