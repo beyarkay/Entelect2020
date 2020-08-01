@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 public class Shape {
 
 	public int id, boundingBox, capacity, mass;
@@ -9,5 +11,16 @@ public class Shape {
 		this.capacity = capacity;
 		this.mass = mass;
 		this.shapeData = shapeData;
+	}
+
+	@Override
+	public String toString() {
+		return "Shape{" +
+				"id=" + id +
+				", boundingBox=" + boundingBox +
+				", capacity=" + capacity +
+				", mass=" + mass +
+				", shapeData=" + Arrays.toString(shapeData) +
+				'}';
 	}
 }
