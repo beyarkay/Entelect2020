@@ -8,24 +8,11 @@ public class Boyd {
 
 		for (int i = 0; i < Utils.inFiles.length; i++) {
 			try {
-
 				Utils.ProblemSpecification problemSpec = Utils.readInput("inputs/shapes_file.json", Utils.inFiles[i]);
-				Shape[] shapes = problemSpec.shapes;
 
 				Battery[] batteries = greedy(problemSpec);
-//				Battery[] batteries = new Battery[shapes.length];
-//				for (int j = 0; j < shapes.length; j++) {
-//					batteries[j] = new Battery(
-//							shapes[j].id,
-//							shapes[j].boundingBox,
-//							shapes[j].capacity,
-//							shapes[j].mass,
-//							shapes[j].shapeData
-//					);
-//					batteries[j].rotationId = 0;
-//				}
 				Utils.writeFile(Utils.outFiles[i], batteries);
-				break;
+//				break;
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -33,33 +20,50 @@ public class Boyd {
 		}
 	}
 
-	public static Battery[] greedy(Utils.ProblemSpecification problemSpec) {
-		Shape[] shapes = problemSpec.shapes;
-		BShape[] bshapes = new BShape[shapes.length];
-		for (int i = 0; i < shapes.length; i++) {
-			bshapes[i] = new BShape(
-					shapes[i].id,
-					shapes[i].boundingBox,
-					shapes[i].capacity,
-					shapes[i].mass,
-					shapes[i].shapeData
-			);
+	public static Battery[] greedy(Utils.ProblemSpecification ps) {
+
+		// Read in PS and
+		Shape[] shapes = ps.shapes;
+		int totalShapes = 0;
+		for (int i = 0; i < ps.shapeCounts.length; i++) {
+			totalShapes += ps.shapeCounts[i];
+		}
+		BShape[] bshapes = new BShape[totalShapes];
+		int counter = 0;
+		for (int i = 0; i < ps.shapeCounts.length; i++) {
+			for (int j = 0; j < ps.shapeCounts[i]; j++) {
+				bshapes[counter] = new BShape(
+						shapes[i].id,
+						shapes[i].boundingBox,
+						shapes[i].capacity,
+						shapes[i].mass,
+						shapes[i].shapeData
+				);
+				counter++;
+			}
 		}
 		Arrays.sort(bshapes);
 
-		Grid grid = new Grid(problemSpec);
+		Grid grid = new Grid(ps);
+		Battery[] batteries = new Battery[totalShapes];
 
-		Battery[] batteries = new Battery[shapes.length];
+		int[] currOffset = new int[]{0, 0};
 
-
-		for (int i = 0; i < bshapes.length; i++) {
-			System.out.println("bshapes[i].density = " + bshapes[i].density);
-
-
+		int maxBoundingBox = 0;
+		for (int i = 0; i < totalShapes; i++) {
+			System.out.println("id:" + bshapes[i].id + ", density:" + bshapes[i].density);
+			batteries[i] = new Battery(bshapes[i]);
+			batteries[i].rotationId = 0;
+			batteries[i].offset = currOffset;
+			currOffset[0] += batteries[i].boundingBox;
+			maxBoundingBox = Math.max(maxBoundingBox, batteries[i].boundingBox);
+			if (currOffset[0] > ps.columns) {
+				currOffset[1] += maxBoundingBox;
+				maxBoundingBox = 0;
+				currOffset[0] = 0;
+			}
 		}
-
 		return batteries;
-
 	}
 
 
