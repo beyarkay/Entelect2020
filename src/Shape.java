@@ -10,7 +10,7 @@ public class Shape {
 		this.boundingBox = boundingBox;
 		this.capacity = capacity;
 		this.mass = mass;
-		this.shapeData = shapeData;
+		this.shapeData = shapeData; //[rotations][cells][2]
 	}
 
 	@Override
