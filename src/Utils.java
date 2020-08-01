@@ -61,6 +61,7 @@ public class Utils {
 					if (!grid.checkAdjacentEmpty(row, col)) {
 						returnable -= 4;
 					} else {
+						// Adjacent whitespaces must be followed
 
 					}
 				}
