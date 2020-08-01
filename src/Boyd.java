@@ -47,7 +47,7 @@ public class Boyd {
 		}
 		Arrays.sort(bshapes);
 
-		Grid grid = new Grid();
+		Grid grid = new Grid(problemSpec);
 
 		Battery[] batteries = new Battery[shapes.length];
 

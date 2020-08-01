@@ -6,6 +6,10 @@ public class Battery extends Shape {
 		super(id, boundingBox, capacity, mass, shapeData);
 	}
 
+	public Battery(Shape s){
+		super (s.id, s.boundingBox, s.capacity, s.mass, s.shapeData);
+	}
+
 	public int[][] getCellLocations() {
 		int[][] locs = new int[shapeData[rotationId].length][2];
 
