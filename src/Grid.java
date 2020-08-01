@@ -1,4 +1,6 @@
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Grid {
 	// top left Rows-Columns
@@ -37,15 +39,48 @@ public class Grid {
 		return sb.toString();
 	}
 
-	public int countAdjacentWhitespaces(int row, int col) {
+	public int countAdjacentWhitespaces(int startRow, int StartCol) {
 		int returnable = 0;
-
+		// reset grid visited
 		for (int[] r : grid_visited) {
 			for (int c : r) {
 				c = 0;
 			}
 		}
 
+		int h = grid.length;
+		if (h == 0)
+			return 0;
+		int l = grid[0].length;
+
+		boolean[][] visited = new boolean[h][l];
+
+		Queue<String> queue = new LinkedList<>();
+
+		queue.add(3 + "," + 2);
+
+		System.out.println("Breadth-First Traversal: ");
+		while (!queue.isEmpty()) {
+
+			String x = queue.remove();
+			int row = Integer.parseInt(x.split(",")[0]);
+			int col = Integer.parseInt(x.split(",")[1]);
+
+			if (row < 0 || col < 0 || row >= h || col >= l || visited[row][col])
+				continue;
+
+			visited[row][col] = true;
+			System.out.println(x);
+			returnable ++;
+			if (col > 0 && grid[row][col - 1] == 0)
+				queue.add(row + "," + (col - 1)); //go left
+			if (col < l-1 && grid[row][col + 1] == 0)
+				queue.add(row + "," + (col + 1)); //go right
+			if (row > 0 && grid[row - 1][col] == 0)
+				queue.add((row - 1) + "," + col); //go up
+			if (row < h-1 && grid[row + 1][col] == 0)
+				queue.add((row + 1) + "," + col); //go down
+		}
 
 		return returnable;
 	}
