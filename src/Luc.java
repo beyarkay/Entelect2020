@@ -7,10 +7,25 @@ public class Luc {
 	public static void main(String[] args) {
 		System.out.println("Hello world");
 
-		Shape[] shapes = Utils.readShapesFile();
-		assert shapes != null;
 
 		Utils.ProblemSpecification ps = Utils.readInput(1);
+		assert ps != null;
+		int sumOfShapes = 0;
+		for (int i : ps.shapeCounts) {
+			sumOfShapes += 1;
+		}
+		Battery[] batteries = new Battery[sumOfShapes];
+		Shape[] shapes = ps.shapes;
+		int bCnt = 0;
+		for (int i = 0; i < ps.shapeCounts.length; i++) {
+			for(int j =0; j < ps.shapeCounts[i]; j++){
+				batteries[bCnt] = new Battery(shapes[i]);
+				bCnt++;
+			}
+		}
+
+		Grid grid = new Grid(ps);
+		System.out.println(grid.toCSV());
 
 		System.out.println("bye");
 

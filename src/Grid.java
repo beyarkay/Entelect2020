@@ -47,7 +47,7 @@ public class Grid {
 		return sb.toString();
 	}
 
-	public int countAdjacentWhitespaces(int startRow, int StartCol) {
+	public int countAdjacentWhitespaces(int startRow, int startCol) {
 		int returnable = 0;
 		// reset grid visited
 		for (int[] r : grid_visited) {
@@ -65,7 +65,7 @@ public class Grid {
 
 		Queue<String> queue = new LinkedList<>();
 
-		queue.add(3 + "," + 2);
+		queue.add(startRow + "," + startCol);
 
 		System.out.println("Breadth-First Traversal: ");
 		while (!queue.isEmpty()) {
