@@ -11,7 +11,7 @@ public class NiceBattery {
 	}
 
 	public Battery toShitBattery() {
-		Battery shitBattery = new Battery(shape.id, shape.boundingBox, shape.capacity, shape.mass, shape.shapeData);
+		Battery shitBattery = new Battery(shape);
 		shitBattery.offset[0] = row;
 		shitBattery.offset[1] = col;
 		shitBattery.rotationId = rotation;
