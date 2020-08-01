@@ -9,20 +9,33 @@ public class Utils {
 	public static String[] inFiles = new String[]{
 			"inputs/grid_1.input",
 			"inputs/grid_2.input",
-			"inputs/grid_3.input"
+			"inputs/grid_3.input",
+			"inputs/grid_4.input",
+			"inputs/grid_5.input"
 	};
 	public static String[] outFiles = new String[]{
-			"outputs/map_1.txt",
-			"outputs/map_2.txt",
-			"outputs/map_3.txt"
+			"outputs/out_1.txt",
+			"outputs/out_2.txt",
+			"outputs/out_3.txt",
+			"outputs/out_4.txt",
+			"outputs/out_5.txt"
 	};
 
 
-	public static void writeFile(String inFile, ArrayList<String> lines) {
+	public static void writeFile(String outFile, Battery[] batteries) {
 		try {
-			FileWriter writer = new FileWriter(inFile);
-			for (int i = 0; i < lines.size(); i++) {
-				writer.write(lines.get(i) + "\n");
+			FileWriter writer = new FileWriter(outFile);
+			for (int i = 0; i < batteries.length; i++) {
+				Battery currBattery = batteries[i];
+				StringBuilder coordsString = new StringBuilder();
+
+				for (int j = 0; j < currBattery.shapeData[currBattery.rotationId].length; j++) {
+					int[] currCell = currBattery.shapeData[currBattery.rotationId][j];
+					coordsString.append("|").append(currCell[0]).append(",").append(currCell[1]);
+				}
+
+				String shapeString = batteries[i].id + coordsString.toString();
+				writer.write(shapeString + "\n");
 			}
 			writer.close();
 		} catch (IOException e) {
