@@ -32,8 +32,10 @@ public class Luc {
 		//ensure single block is last
 		if(bshapes[0].id == 24) {
 			BShape temp = bshapes[0];
-			bshapes[0] = bshapes[shapes.length];
-			bshapes[shapes.length] = temp;
+			for (int i = 1; i < bshapes.length-1; i++) {
+				bshapes[i-1] = bshapes[i];
+			}
+			bshapes[shapes.length-1] = temp;
 		}
 
 		int bCnt = 0;
