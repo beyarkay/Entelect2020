@@ -1,8 +1,9 @@
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.*;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Utils {
 	public static String[] inFiles = new String[]{
@@ -27,6 +28,48 @@ public class Utils {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+	}
+
+	public static Shape[] readShapesFile(String fileName) throws FileNotFoundException {
+		Scanner scanner = new Scanner(new File("filename")).useDelimiter("\\Z");
+		String jsonString = scanner.next();
+		scanner.close();
+		JSONObject obj = new JSONObject(jsonString);
+
+		JSONArray shapesJSON = obj.getJSONArray("shapes");
+		Shape[] shapes = new Shape[shapesJSON.length()];
+
+		for (int s = 0; s < shapesJSON.length(); s++) {
+			JSONObject shapeJSON = shapesJSON.getJSONObject(s);
+
+			JSONArray orientationsJSON = shapeJSON.getJSONArray("orientations");
+
+			//Get number of points in the shape
+			int shapeMass = orientationsJSON.getJSONObject(0).getJSONArray("cells").length();
+
+			//Make the shapeData array
+			int[][][] shapeData = new int[orientationsJSON.length()][shapeMass][2];
+			for (int i = 0; i < orientationsJSON.length(); i++) {
+				JSONObject orientationJSON = orientationsJSON.getJSONObject(i);
+				JSONArray cellsJSON = orientationJSON.getJSONArray("cells");
+				for (int j = 0; j < cellsJSON.length(); j++) {
+					JSONArray cellJSON = cellsJSON.getJSONArray(j);
+
+					shapeData[i][j][0] = cellJSON.getInt(0);
+					shapeData[i][j][1] = cellJSON.getInt(1);
+				}
+			}
+
+			shapes[s] = new Shape(
+					shapeJSON.getInt("shape_id"),
+					shapeJSON.getInt("bounding_box"),
+					shapeJSON.getInt("capacity"),
+					shapeMass,
+					shapeData
+			);
+		}
+
+		return shapes;
 	}
 
 
