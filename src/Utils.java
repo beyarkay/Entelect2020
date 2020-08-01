@@ -105,7 +105,7 @@ public class Utils {
 						returnable -= 4;
 					} else {
 						// Adjacent whitespaces must be followed
-
+						int adjWhiteSpace = grid.countAdjacentWhitespaces(row, col);
 					}
 				}
 			}

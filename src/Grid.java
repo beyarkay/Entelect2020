@@ -35,4 +35,12 @@ public class Grid {
 		}
 		return sb.toString();
 	}
+
+	public int countAdjacentWhitespaces(int row, int col) {
+		int returnable = 0;
+
+
+
+		return returnable;
+	}
 }
