@@ -3,7 +3,7 @@
 We took part in the Entelect University Cup under the team name *Titatium Purple Tractors*.
 
 We came in 5th place with 31.3 million points, 600k behind 4th place.
-You can find the final code in `src/Boyd.java`.
+You can find the final code in `src/Boyd.java`. 
 ![](post.png)
 
 Our per-grid scores were:
