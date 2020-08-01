@@ -118,8 +118,11 @@ public class Utils {
 
 	public static class ProblemSpecification {
 		public int rows, columns;
+
+		//Shapes and shapeCounts are parallel arrays (there are shapeCounts[i] instances of shape[i] available)
 		public Shape[] shapes;
 		public int[] shapeCounts;
+
 		public int[][] blockedCells;
 
 		public ProblemSpecification(int rows, int columns, Shape[] shapes, int[] shapeCounts, int[][] blockedCells) {
