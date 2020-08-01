@@ -10,6 +10,8 @@ public class Luc {
 		Shape[] shapes = Utils.readShapesFile();
 		assert shapes != null;
 
+		Utils.ProblemSpecification ps = Utils.readInput()
+
 		System.out.println("bye");
 
 //		for (int i = 0; i < Utils.inFiles.length; i++) {

@@ -81,6 +81,10 @@ public class Utils {
 		return shapes;
 	}
 
+	public static ProblemSpecification readInput(String fileName, int inputNumber) throws FileNotFoundException {
+		return readInput("inputs/shapes_file.json", "inputs/grid_"+Integer.toString(inputNumber)+".input");
+	}
+
 	public static ProblemSpecification readInput(String shapesFileName, String fileName) throws FileNotFoundException {
 		Shape[] shapes = Utils.readShapesFile(shapesFileName);
 		Scanner scanner = new Scanner(new File(fileName)).useDelimiter("\\D"); //any non-digit is a delimiter
