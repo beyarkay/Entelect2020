@@ -81,25 +81,54 @@ public class Utils {
 		return shapes;
 	}
 
+	public static ProblemSpecification readInput(String shapesFileName, String fileName) throws FileNotFoundException {
+		Shape[] shapes = Utils.readShapesFile(shapesFileName);
+		Scanner scanner = new Scanner(new File(fileName)).useDelimiter("\\D"); //any non-digit is a delimiter
+		int rows, columns, nShapes, nBlockedCells;
+		rows = scanner.nextInt();
+		columns = scanner.nextInt();
+		nShapes = scanner.nextInt();
+		nBlockedCells = scanner.nextInt();
 
-	public static ArrayList<String> readInput(String fileName) {
-		ArrayList<String> lines = new ArrayList<>();
-		BufferedReader br;
-		try {
-			br = new BufferedReader(new FileReader(fileName));
+		Shape[] existing_shapes = new Shape[nShapes];
+		int[] shapeCounts = new int[nShapes];
 
-//		String[] firstLineParts = br.readLine().split(",");
-
-			String line;
-			while ((line = br.readLine()) != null) {
-				lines.add(line);
-			}
-			br.close();
-			return lines;
-		} catch (IOException e) {
-			e.printStackTrace();
+		for (int i = 0; i < nShapes; i++) {
+			existing_shapes[i] = shapes[scanner.nextInt() - 1];
+			shapeCounts[i] = scanner.nextInt();
 		}
-		return null;
+
+		int[][] blockedCells = new int[nBlockedCells][2];
+
+		for (int i = 0; i < nBlockedCells; i++) {
+			blockedCells[i][0] = scanner.nextInt();
+			blockedCells[i][1] = scanner.nextInt();
+		}
+
+		scanner.close();
+
+		return new ProblemSpecification(
+				rows,
+				columns,
+				existing_shapes,
+				shapeCounts,
+				blockedCells
+		);
+	}
+
+	public static class ProblemSpecification {
+		public int rows, columns;
+		public Shape[] shapes;
+		public int[] shapeCounts;
+		public int[][] blockedCells;
+
+		public ProblemSpecification(int rows, int columns, Shape[] shapes, int[] shapeCounts, int[][] blockedCells) {
+			this.rows = rows;
+			this.columns = columns;
+			this.shapes = shapes;
+			this.shapeCounts = shapeCounts;
+			this.blockedCells = blockedCells;
+		}
 	}
 
 	public static int calculateScore(Grid grid) {
