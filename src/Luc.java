@@ -1,3 +1,4 @@
+import java.awt.image.AreaAveragingScaleFilter;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,20 +13,48 @@ public class Luc {
 		assert ps != null;
 		int sumOfShapes = 0;
 		for (int i : ps.shapeCounts) {
-			sumOfShapes += 1;
+			sumOfShapes += i;
 		}
-		Battery[] batteries = new Battery[sumOfShapes];
+		Battery[] availableBatteries = new Battery[sumOfShapes];
 		Shape[] shapes = ps.shapes;
+
+		BShape[] bshapes = new BShape[shapes.length];
+		for (int i = 0; i < shapes.length; i++) {
+			bshapes[i] = new BShape(
+					shapes[i].id,
+					shapes[i].boundingBox,
+					shapes[i].capacity,
+					shapes[i].mass,
+					shapes[i].shapeData
+			);
+		}
+		Arrays.sort(bshapes);
+		//ensure single block is last
+		if(bshapes[0].id == 24) {
+			BShape temp = bshapes[0];
+			bshapes[0] = bshapes[shapes.length];
+			bshapes[shapes.length] = temp;
+		}
+
 		int bCnt = 0;
 		for (int i = 0; i < ps.shapeCounts.length; i++) {
 			for(int j =0; j < ps.shapeCounts[i]; j++){
-				batteries[bCnt] = new Battery(shapes[i]);
+				availableBatteries[bCnt] = new Battery(bshapes[i]);
 				bCnt++;
 			}
 		}
 
 		Grid grid = new Grid(ps);
 		System.out.println(grid.toCSV());
+
+		Battery[] usedBatteries = new Battery[sumOfShapes];
+
+		for (int i = 0; i < bshapes.length; i++) {
+			System.out.println("bshapes["+ i +"].density = id"+bshapes[i].id+ " = "+ bshapes[i].density);
+		}
+
+		SpringerPaper(availableBatteries, grid, bshapes);
+
 
 		System.out.println("bye");
 
@@ -35,5 +64,16 @@ public class Luc {
 //			Utils.writeFile(Utils.outFiles[i], lines);
 //		}
 	}
+
+	private static Battery[] SpringerPaper(Battery[] availableBatteries, Grid grid, BShape[] bshapes) {
+		List<Battery> usedBatteries = new ArrayList<>();
+
+
+
+
+		return (Battery[]) usedBatteries.toArray();
+	}
+
 }
+
 

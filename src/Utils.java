@@ -103,28 +103,38 @@ public class Utils {
 		return null;
 	}
 
+	private static int badNextInt(Scanner scanner){
+		String str;
+		str = scanner.next();
+		while(!str.matches("-?\\d+")){
+			str=scanner.next();
+		}
+		return Integer.parseInt(str);
+	}
+
 	public static ProblemSpecification readInput(String shapesFileName, String fileName) throws FileNotFoundException {
 		Shape[] shapes = Utils.readShapesFile(shapesFileName);
 		Scanner scanner = new Scanner(new File(fileName)).useDelimiter("\\D"); //any non-digit is a delimiter
 		int rows, columns, nShapes, nBlockedCells;
-		rows = scanner.nextInt();
-		columns = scanner.nextInt();
-		nShapes = scanner.nextInt();
-		nBlockedCells = scanner.nextInt();
+
+		rows = badNextInt(scanner);
+		columns = badNextInt(scanner);
+		nShapes = badNextInt(scanner);
+		nBlockedCells = badNextInt(scanner);
 
 		Shape[] existing_shapes = new Shape[nShapes];
 		int[] shapeCounts = new int[nShapes];
 
 		for (int i = 0; i < nShapes; i++) {
-			existing_shapes[i] = shapes[scanner.nextInt() - 1];
-			shapeCounts[i] = scanner.nextInt();
+			existing_shapes[i] = shapes[badNextInt(scanner) - 1];
+			shapeCounts[i] = badNextInt(scanner);
 		}
 
 		int[][] blockedCells = new int[nBlockedCells][2];
 
 		for (int i = 0; i < nBlockedCells; i++) {
-			blockedCells[i][0] = scanner.nextInt();
-			blockedCells[i][1] = scanner.nextInt();
+			blockedCells[i][0] = badNextInt(scanner);
+			blockedCells[i][1] = badNextInt(scanner);
 		}
 
 		scanner.close();

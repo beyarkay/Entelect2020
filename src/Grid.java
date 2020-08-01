@@ -7,12 +7,16 @@ public class Grid {
 	public int[][] grid;
 	public int[][] grid_visited;
 
+	int rows, columns;
+
 
 	public Grid(Utils.ProblemSpecification ps) {
 		this.grid = new int[ps.rows][ps.columns];
 		for (int i = 0; i < ps.blockedCells.length; i++) {
 			grid[ps.blockedCells[i][0]][ps.blockedCells[i][1]] = -1;
 		}
+		rows = ps.rows;
+		columns = ps.columns;
 	}
 
 	public boolean checkAdjacentEmpty(int row, int col) {
@@ -46,6 +50,8 @@ public class Grid {
 		}
 		return sb.toString();
 	}
+
+
 
 	public int countAdjacentWhitespaces(int startRow, int startCol) {
 		int returnable = 0;
