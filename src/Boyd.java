@@ -7,7 +7,7 @@ public class Boyd {
 	public static void main(String[] args) {
 		System.out.println("Hello world");
 
-		for (int i = 2; i < Utils.inFiles.length; i++) {
+		for (int i = 4; i < Utils.inFiles.length; i++) {
 			System.out.println("Calculating: " + Utils.inFiles[i]);
 			try {
 				Utils.ProblemSpecification problemSpec = Utils.readInput("inputs/shapes_file.json", Utils.inFiles[i]);
@@ -128,18 +128,25 @@ public class Boyd {
 		ArrayList<Battery> batteries = new ArrayList<>();
 		// for each shape
 		int lastId = -1;
-		long start = System.currentTimeMillis();
+		long t = System.currentTimeMillis();
+		long ttotal = 1;
+		float ignoreme = 0.2f;
 		for (int i = 0; i < totalShapes; i++) {
 			boolean placed = false;
 			Shape currShape = bshapes[i];
+			if (i >= totalShapes*ignoreme) {
+				ignoreme += 0.2;
+				System.out.println("Checked " + i + "/" + totalShapes + "(" + Math.round(((float) i) / totalShapes * 100) + ")");
+				ttotal += System.currentTimeMillis()-t;
+				System.out.println("Taken " + ttotal/1000 + "s");
+				System.out.println("ETA "+(float)(ttotal)/(float)((float)(i+1)/(float)totalShapes));
+			}//			System.out.println("id:" + currShape.id);
 
-			if (i % 100 == 0) {
-				System.out.println("Done " + i + "/" + totalShapes + " (" + Math.round(((float) i) / totalShapes * 100) + "%)");
-			}
 			if (lastId == currShape.id) {
-				System.out.println("Skipping");
+//				System.out.println("Skipping");
 				continue;
 			}
+
 			//for each offset row
 			for (int r = 0; r < ps.rows; r++) {
 				// for each offset col
