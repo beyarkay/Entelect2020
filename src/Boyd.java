@@ -12,20 +12,20 @@ public class Boyd {
 				Utils.ProblemSpecification problemSpec = Utils.readInput("inputs/shapes_file.json", Utils.inFiles[i]);
 				Shape[] shapes = problemSpec.shapes;
 
-//				strat1(shapes);
-				Battery[] batteries = new Battery[shapes.length];
-				for (int j = 0; j < shapes.length; j++) {
-					batteries[j] = new Battery(
-							shapes[j].id,
-							shapes[j].boundingBox,
-							shapes[j].capacity,
-							shapes[j].mass,
-							shapes[j].shapeData
-					);
-					batteries[j].rotationId = 0;
-				}
+				Battery[] batteries = greedy(problemSpec);
+//				Battery[] batteries = new Battery[shapes.length];
+//				for (int j = 0; j < shapes.length; j++) {
+//					batteries[j] = new Battery(
+//							shapes[j].id,
+//							shapes[j].boundingBox,
+//							shapes[j].capacity,
+//							shapes[j].mass,
+//							shapes[j].shapeData
+//					);
+//					batteries[j].rotationId = 0;
+//				}
 				Utils.writeFile(Utils.outFiles[i], batteries);
-
+				break;
 
 			} catch (FileNotFoundException e) {
 				e.printStackTrace();
@@ -33,7 +33,8 @@ public class Boyd {
 		}
 	}
 
-	public static void strat1(Shape[] shapes) {
+	public static Battery[] greedy(Utils.ProblemSpecification problemSpec) {
+		Shape[] shapes = problemSpec.shapes;
 		BShape[] bshapes = new BShape[shapes.length];
 		for (int i = 0; i < shapes.length; i++) {
 			bshapes[i] = new BShape(
@@ -45,9 +46,19 @@ public class Boyd {
 			);
 		}
 		Arrays.sort(bshapes);
+
+		Grid grid = new Grid();
+
+		Battery[] batteries = new Battery[shapes.length];
+
+
 		for (int i = 0; i < bshapes.length; i++) {
 			System.out.println("bshapes[i].density = " + bshapes[i].density);
+
+
 		}
+
+		return batteries;
 
 	}
 

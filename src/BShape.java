@@ -8,6 +8,7 @@ public class BShape extends Shape implements Comparable {
 
 	@Override
 	public int compareTo(Object other) {
-		return Float.compare(this.density, ((BShape) other).density);
+		// Sort from highest density to lowest
+		return -Float.compare(this.density, ((BShape) other).density);
 	}
 }
