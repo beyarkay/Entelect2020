@@ -17,7 +17,6 @@ public class Utils {
 	};
 
 
-
 	public static void writeFile(String inFile, ArrayList<String> lines) {
 		try {
 			FileWriter writer = new FileWriter(inFile);
@@ -51,16 +50,28 @@ public class Utils {
 		return null;
 	}
 
-	public static int calculateScore(Grid grid){
+	public static int calculateScore(Grid grid) {
 		int returnable = 0;
 
+		for (int row = 0; row < grid.grid.length; row++) {
+			for (int col = 0; col < grid.grid[row].length; col++) {
+				if (col != 0) {
+					returnable += 10;
+				} else {
+					if (!grid.checkAdjacentEmpty(row, col)) {
+						returnable -= 4;
+					} else {
+
+					}
+				}
+			}
+		}
 
 		return returnable;
 	}
 
 
-
-	public static void greedy(){
+	public static void greedy() {
 
 	}
 }
