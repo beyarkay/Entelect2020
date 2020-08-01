@@ -1,8 +1,10 @@
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import java.io.*;
-import java.util.ArrayList;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Utils {
@@ -31,7 +33,7 @@ public class Utils {
 
 				for (int j = 0; j < currBattery.shapeData[currBattery.rotationId].length; j++) {
 					int[] currCell = currBattery.shapeData[currBattery.rotationId][j];
-					coordsString.append("|").append(currCell[0]).append(",").append(currCell[1]);
+					coordsString.append("|").append(currCell[0] + currBattery.offset[0]).append(",").append(currCell[1] + currBattery.offset[1]);
 				}
 
 				String shapeString = batteries[i].id + coordsString.toString();
@@ -103,11 +105,11 @@ public class Utils {
 		return null;
 	}
 
-	private static int badNextInt(Scanner scanner){
+	private static int badNextInt(Scanner scanner) {
 		String str;
 		str = scanner.next();
-		while(!str.matches("-?\\d+")){
-			str=scanner.next();
+		while (!str.matches("-?\\d+")) {
+			str = scanner.next();
 		}
 		return Integer.parseInt(str);
 	}
@@ -187,9 +189,9 @@ public class Utils {
 		}
 
 		float totalCapacity = 1;
-		float scoreModifier = totalCapacity/filled;
+		float scoreModifier = totalCapacity / filled;
 
-		return (int) (returnable*scoreModifier);
+		return (int) (returnable * scoreModifier);
 	}
 
 

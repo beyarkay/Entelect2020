@@ -1,4 +1,5 @@
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Boyd {
@@ -7,6 +8,7 @@ public class Boyd {
 		System.out.println("Hello world");
 
 		for (int i = 0; i < Utils.inFiles.length; i++) {
+			System.out.println("Calculating: " + Utils.inFiles[i]);
 			try {
 				Utils.ProblemSpecification problemSpec = Utils.readInput("inputs/shapes_file.json", Utils.inFiles[i]);
 
@@ -45,25 +47,54 @@ public class Boyd {
 		Arrays.sort(bshapes);
 
 		Grid grid = new Grid(ps);
-		Battery[] batteries = new Battery[totalShapes];
-
+		ArrayList<Battery> batteries = new ArrayList<>();
 		int[] currOffset = new int[]{0, 0};
+		int currRotation = 0;
 
 		int maxBoundingBox = 0;
 		for (int i = 0; i < totalShapes; i++) {
-			System.out.println("id:" + bshapes[i].id + ", density:" + bshapes[i].density);
-			batteries[i] = new Battery(bshapes[i]);
-			batteries[i].rotationId = 0;
-			batteries[i].offset = currOffset;
-			currOffset[0] += batteries[i].boundingBox;
-			maxBoundingBox = Math.max(maxBoundingBox, batteries[i].boundingBox);
-			if (currOffset[0] > ps.columns) {
+//			System.out.println("id:" + bshapes[i].id + ", density:" + bshapes[i].density + ", bbox:" + bshapes[i].boundingBox);
+			// Check that the current shape can be places at the current offset
+			boolean canAdd = true;
+			for (int j = 0; j < bshapes[i].shapeData[currRotation].length; j++) {
+				int currRow = bshapes[i].shapeData[currRotation][j][0] + currOffset[0];
+				int currCol = bshapes[i].shapeData[currRotation][j][1] + currOffset[1];
+				if (currRow < 0 || currRow >= ps.rows || currCol < 0 || currCol >= ps.columns || grid.grid[currRow][currCol] == -1) {
+					canAdd = false;
+					break;
+				}
+			}
+			if (canAdd) {
+				// Now actually add the shape in currRotation, currOffset to the grid & battery ArrayList
+				for (int j = 0; j < bshapes[i].shapeData[currRotation].length; j++) {
+					int currRow = bshapes[i].shapeData[currRotation][j][0] + currOffset[0];
+					int currCol = bshapes[i].shapeData[currRotation][j][1] + currOffset[1];
+					grid.grid[currRow][currCol] = bshapes[i].id;
+				}
+				Battery currBattery = new Battery(bshapes[i]);
+				currBattery.rotationId = currRotation;
+				currBattery.offset[0] = currOffset[0];
+				currBattery.offset[1] = currOffset[1];
+				batteries.add(currBattery);
+//				System.out.println(grid.toCSV());
+			}
+			// Update the offset such that the next shape will fit
+
+			if (batteries.size() > 0) {
+				currOffset[0] += batteries.get(batteries.size() - 1).boundingBox;
+				maxBoundingBox = Math.max(maxBoundingBox, batteries.get(batteries.size() - 1).boundingBox);
+			}
+			if (currOffset[0] >= ps.rows) {
 				currOffset[1] += maxBoundingBox;
 				maxBoundingBox = 0;
 				currOffset[0] = 0;
 			}
+			if (currOffset[1] >= ps.columns) {
+				break;
+			}
+
 		}
-		return batteries;
+		return batteries.toArray(new Battery[0]);
 	}
 
 
