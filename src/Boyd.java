@@ -7,7 +7,7 @@ public class Boyd {
 	public static void main(String[] args) {
 		System.out.println("Hello world");
 
-		for (int i = 0; i < Utils.inFiles.length; i++) {
+		for (int i = 2; i < Utils.inFiles.length; i++) {
 			System.out.println("Calculating: " + Utils.inFiles[i]);
 			try {
 				Utils.ProblemSpecification problemSpec = Utils.readInput("inputs/shapes_file.json", Utils.inFiles[i]);
@@ -127,20 +127,24 @@ public class Boyd {
 		Grid grid = new Grid(ps);
 		ArrayList<Battery> batteries = new ArrayList<>();
 		// for each shape
+		int lastId = -1;
+		long start = System.currentTimeMillis();
 		for (int i = 0; i < totalShapes; i++) {
 			boolean placed = false;
 			Shape currShape = bshapes[i];
-			if (((float) i * 100) / totalShapes % 1 == 0) {
-				System.out.println("Done " + i + "/" + totalShapes + "(" + Math.round(((float) i) / totalShapes * 1000) + ")");
-			}//			System.out.println("id:" + currShape.id);
+
+			if (i % 100 == 0) {
+				System.out.println("Done " + i + "/" + totalShapes + " (" + Math.round(((float) i) / totalShapes * 100) + "%)");
+			}
+			if (lastId == currShape.id) {
+				System.out.println("Skipping");
+				continue;
+			}
 			//for each offset row
 			for (int r = 0; r < ps.rows; r++) {
 				// for each offset col
 				for (int c = 0; c < ps.columns; c++) {
 					// for each rotation
-//					if (grid.grid[r][c] != 0){
-//						continue;
-//					}
 					for (int rot = 0; rot < 4; rot++) {
 						// check if the current shape can fit
 						boolean collision = false;
@@ -176,6 +180,11 @@ public class Boyd {
 //					System.out.println(grid.toASCII());
 					break;
 				}
+			}
+			if (placed) {
+				lastId = -1;
+			} else {
+				lastId = currShape.id;
 			}
 		}
 		return batteries.toArray(new Battery[0]);
