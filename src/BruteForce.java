@@ -1,6 +1,5 @@
 import java.io.FileNotFoundException;
-import java.util.Arrays;
-import java.util.Stack;
+import java.util.*;
 
 public class BruteForce {
 
@@ -102,11 +101,16 @@ public class BruteForce {
 
 								float score = (10 * totalMass) * ((float) totalCapacity / totalMass);
 
+//								for (int j = 0; j < stack.size(); j++) {
+//									System.out.print(stack.get(j).shape.id + "(" + stack.get(j).row + "," + stack.get(j).col + "," + stack.get(j).rotation + ") ");
+//								}
+//								System.out.println(score);
+
 								if (score > bestScore) {
 									bestScore = score;
 									bestSolution = stack.toArray(new NiceBattery[stack.size()]);
-									System.out.println("new high score: " + bestScore);
-									lastImprovement = System.currentTimeMillis();
+//									System.out.println("new high score: " + bestScore);
+//									lastImprovement = System.currentTimeMillis();
 								}
 
 								break loop1;
