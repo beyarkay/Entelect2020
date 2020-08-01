@@ -94,8 +94,13 @@ public class Utils {
 		return shapes;
 	}
 
-	public static ProblemSpecification readInput(String fileName, int inputNumber) throws FileNotFoundException {
-		return readInput("inputs/shapes_file.json", "inputs/grid_"+Integer.toString(inputNumber)+".input");
+	public static ProblemSpecification readInput(int inputNumber) {
+		try {
+			return readInput("inputs/shapes_file.json", "inputs/grid_"+Integer.toString(inputNumber)+".input");
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	public static ProblemSpecification readInput(String shapesFileName, String fileName) throws FileNotFoundException {
