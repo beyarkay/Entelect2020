@@ -96,7 +96,7 @@ public class Utils {
 
 	public static ProblemSpecification readInput(int inputNumber) {
 		try {
-			return readInput("inputs/shapes_file.json", "inputs/grid_"+Integer.toString(inputNumber)+".input");
+			return readInput("inputs/shapes_file.json", "inputs/grid_" + inputNumber + ".input");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		}
@@ -145,7 +145,7 @@ public class Utils {
 		public Shape[] shapes;
 		public int[] shapeCounts;
 
-		public int[][] blockedCells;
+		public int[][] blockedCells; // [nBlockedCells][2] where the last 2 are row, column
 
 		public ProblemSpecification(int rows, int columns, Shape[] shapes, int[] shapeCounts, int[][] blockedCells) {
 			this.rows = rows;
